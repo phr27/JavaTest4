@@ -1,0 +1,28 @@
+version: "3"
+services:
+  mysql-1:
+    build:
+      context: .
+      dockerfile: ./docker/mysql/Dockerfile
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    container_name: javatest3mysql
+  java-1:
+    build:
+      context: .
+      dockerfile: ./docker/java/Dockerfile
+    links:
+      - mysql-1
+    depends_on:
+      - mysql-1
+    environment:
+      MYSQL_IP: javatest3mysql
+      MYSQL_PORT: 3306
+      USER: root
+      MYSQL_ROOT_PASSWORD: 123456
+      TITLE: title_test
+      DESCRIPTION: description_test
+      LANGUAGE_ID: 1
+
